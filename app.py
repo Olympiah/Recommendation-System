@@ -10,9 +10,10 @@ import pickle
 import requests
 
 # load the nlp model and tfidf vectorizer from disk
-filename = 'nlp_model.pkl'
+filename = 'models/nlp_model.pkl'
 clf = pickle.load(open(filename, 'rb'))
-vectorizer = pickle.load(open('tranform.pkl', 'rb'))
+
+vectorizer = pickle.load(open('models/tranform.pkl', 'rb'))
 
 
 def create_similarity():
@@ -24,7 +25,7 @@ def create_similarity():
     similarity = cosine_similarity(count_matrix)
     return data, similarity
 
-
+# Function to provide recommendations
 def rcmd(m):
     m = m.lower()
     try:
@@ -74,9 +75,13 @@ def home():
 
 
 @app.route("/similarity", methods=["POST"])
+# Function to get similar movies
 def similarity():
+    # request for movie title
     movie = request.form['name']
+    # recommend movie
     rc = rcmd(movie)
+
     if type(rc) == type('string'):
         return rc
     else:
@@ -86,7 +91,8 @@ def similarity():
 
 @app.route("/recommend", methods=["POST"])
 def recommend():
-    # getting data from AJAX request
+    # getting data from AJAX (asynchronous javascript) request
+    # all this data is from the imdb database
     title = request.form['title']
     cast_ids = request.form['cast_ids']
     cast_names = request.form['cast_names']
@@ -121,11 +127,12 @@ def recommend():
     cast_places = convert_to_list(cast_places)
 
     # convert string to list (eg. "[1,2,3]" to [1,2,3])
+    # getting rid of the comma and both closing and opening brackets.
     cast_ids = cast_ids.split(',')
     cast_ids[0] = cast_ids[0].replace("[", "")
     cast_ids[-1] = cast_ids[-1].replace("]", "")
 
-    # rendering the string to python string
+    # rendering the string to python string for easy rendering.
     for i in range(len(cast_bios)):
         cast_bios[i] = cast_bios[i].replace(r'\n', '\n').replace(r'\"', '\"')
 
@@ -138,6 +145,7 @@ def recommend():
                     range(len(cast_places))}
 
     # web scraping to get user reviews from IMDB site
+    # NOTE: This is done in real-time.
     sauce = urllib.request.urlopen('https://www.imdb.com/title/{}/reviews?ref_=tt_ov_rt'.format(imdb_id)).read()
     soup = bs.BeautifulSoup(sauce, 'lxml')
     soup_result = soup.find_all("div", {"class": "text show-more__control"})
@@ -147,8 +155,9 @@ def recommend():
     for reviews in soup_result:
         if reviews.string:
             reviews_list.append(reviews.string)
-            # passing the review to our model
+            # converting to numpy array
             movie_review_list = np.array([reviews.string])
+            # passing the review to our model
             movie_vector = vectorizer.transform(movie_review_list)
             pred = clf.predict(movie_vector)
             reviews_status.append('Good' if pred else 'Bad')
@@ -159,8 +168,7 @@ def recommend():
     # passing all the data to the html file
     return render_template('recommend.html', title=title, poster=poster, overview=overview, vote_average=vote_average,
                            vote_count=vote_count, release_date=release_date, runtime=runtime, status=status,
-                           genres=genres,
-                           movie_cards=movie_cards, reviews=movie_reviews, casts=casts, cast_details=cast_details)
+                           genres=genres, movie_cards=movie_cards, reviews=movie_reviews, casts=casts, cast_details=cast_details)
 
 
 if __name__ == '__main__':
