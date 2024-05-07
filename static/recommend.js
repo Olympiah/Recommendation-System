@@ -157,7 +157,7 @@ function show_details(movie_details,arr,movie_title,my_api_key,movie_id){
   $.ajax({
     type:'POST',
     data:details,
-    url:"/recommend",
+    url:"/recommendation",
     dataType: 'html',
     complete: function(){
       $("#loader").delay(500).fadeOut();

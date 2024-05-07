@@ -38,13 +38,13 @@
       </div>
       <div id="details">
         <br/>
-        <h6 id="title" style="color:white;">Main Title: &nbsp;{{title}}</h6>
-        <h6 id="overview" style="color:white;max-width: 85%">Overview: <br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{overview}}</h6>
+        <h6 id="title" style="color:white;">Title: {{title}}</h6>
+        <h6 id="overview" style="color:white;max-width: 85%">Overview: <br/><br/>{{overview}}</h6>
         <h6 id="vote_average" style="color:white;">RATING: &nbsp;{{vote_average}}/10 ({{vote_count}} votes)</h6>
         <h6 id="genres" style="color:white;">GENRE: &nbsp;{{genres}}</h6>
         <h6 id="date" style="color:white;">RELEASE DATE: &nbsp;{{release_date}}</h6>
         <h6 id="runtime" style="color:white;">RUNTIME: &nbsp;{{runtime}}</h6>
-        <h6 id="status" style="color:white;">STATUS: &nbsp;{{status}}</h6>
+        <h6 id="status" style="color:white;">STATUS: {{status}}</h6>
       </div>
     </div>
 </div>
@@ -73,7 +73,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">End</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -83,7 +83,7 @@
   {% if casts|length > 1 %}
   <div class="movie" style="color: #E8E8E8;">
     	<center>
-		<h3>ACTORS & ACTRESSES</h3>
+		<h3>CAST MEMBERS</h3>
 		<h5>(Click on the cast to know more)</h5>
 	</center>
   </div>
@@ -147,7 +147,7 @@
 
 
       <div class="movie" style="color: #E8E8E8;">
-      <center><h3>RECOMMENDED MOVIES FOR YOU</h3><h5>(Click any of the movies to get recommendation)</h5></center>
+      <center><h3>RECOMMENDED MOVIES FOR YOU</h3><h5>(Click any of the movies to get more details)</h5></center>
     </div>
 
     <div class="movie-content">

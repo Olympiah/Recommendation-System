@@ -17,7 +17,7 @@ vectorizer = pickle.load(open('models/tranform.pkl', 'rb'))
 
 
 def create_similarity():
-    data = pd.read_csv('main_data.csv')
+    data = pd.read_csv('datasets/main_data.csv')
     # creating a count matrix
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(data['comb'])
@@ -34,7 +34,7 @@ def rcmd(m):
     except:
         data, similarity = create_similarity()
     if m not in data['movie_title'].unique():
-        return ('Sorry! try another movie name')
+        return ('Sorry! Try another movie name')
     else:
         i = data.loc[data['movie_title'] == m].index[0]
         lst = list(enumerate(similarity[i]))
@@ -56,9 +56,10 @@ def convert_to_list(my_list):
     return my_list
 
 
-# to get suggestions of movies
+# to get suggestions of movies when typing
 def get_suggestions():
-    data = pd.read_csv('main_data.csv')
+
+    data = pd.read_csv('datasets/main_data.csv')
     return list(data['movie_title'].str.capitalize())
 
 
@@ -166,7 +167,7 @@ def recommend():
     movie_reviews = {reviews_list[i]: reviews_status[i] for i in range(len(reviews_list))}
 
     # passing all the data to the html file
-    return render_template('recommend.html', title=title, poster=poster, overview=overview, vote_average=vote_average,
+    return render_template('recommendation.html', title=title, poster=poster, overview=overview, vote_average=vote_average,
                            vote_count=vote_count, release_date=release_date, runtime=runtime, status=status,
                            genres=genres, movie_cards=movie_cards, reviews=movie_reviews, casts=casts, cast_details=cast_details)
 
