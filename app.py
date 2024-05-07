@@ -13,7 +13,7 @@ import requests
 filename = 'models/nlp_model.pkl'
 clf = pickle.load(open(filename, 'rb'))
 
-vectorizer = pickle.load(open('models/tranform.pkl', 'rb'))
+vectorizer = pickle.load(open('models/transform.pkl', 'rb'))
 
 
 def create_similarity():
@@ -34,7 +34,7 @@ def rcmd(m):
     except:
         data, similarity = create_similarity()
     if m not in data['movie_title'].unique():
-        return ('Sorry! Try another movie name')
+        return ('Sorry!Try another movie name')
     else:
         i = data.loc[data['movie_title'] == m].index[0]
         lst = list(enumerate(similarity[i]))
