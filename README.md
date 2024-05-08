@@ -13,7 +13,15 @@ This project involved the following steps:
 5. Deployment
 
 ## Screenshots of the UI
+<img src="/Screenshot (532).png" alt="Screenshot of the application" />
+<table> 
+  <tr> 
+    <td> <img src="Screenshot (533).png" alt="Screenshot of the application" width="600"/> </td>
+    <td> <img src="Screenshot (534).png" alt="Screenshot of the application" width="600"/> </td>
+  </tr>
+</table>
 
+<div align = "center"><img src="Screenshot (535).png" alt="Screenshot of the application" width="500"/></div>
 
 ## Runing the Application
 
